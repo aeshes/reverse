@@ -19,13 +19,12 @@ crc32_loop:
   mov ebx, edi        ; y = crc
   xor ebx, eax        ; y = crc xor x
   and ebx, 0FFh       ; y = y and 0xFF
-  mov eax, ebx        ; eax = y
-  shl eax, 2          ; eax = eax * 4
-  mov eax, [crc32_table + eax] ; b = crc32_table[y]
+  shl ebx, 2          ; y = y * 4
+  mov ebx, [crc32_table + ebx] ; b = crc32_table[y]
   mov edx, edi        ; edx = crc
   shr edx, 8          ; a = crc >> 8
   mov edi, edx        ; crc = a
-  xor edi, eax        ; crc = a xor b
+  xor edi, ebx        ; crc = a xor b
   loop crc32_loop
   mov ecx, 0FFFFFFFFh
   xor edi, ecx        ; crc = crc xor 0xFFFFFFFF
@@ -79,4 +78,4 @@ dd  0bdbdf21ch, 0cabac28ah, 53b39330h,  24b4a3a6h,  0bad03605h, 0cdd70693h
 dd  54de5729h,  23d967bfh,  0b3667a2eh, 0c4614ab8h, 5d681b02h,  2a6f2b94h
 dd  0b40bbe37h, 0c30c8ea1h, 5a05df1bh,  2d02ef8dh
 
-buf db '123456789',0                   
+buf db '123456789',0
