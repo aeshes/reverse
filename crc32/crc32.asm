@@ -26,8 +26,7 @@ crc32_loop:
   mov edi, edx        ; crc = a
   xor edi, ebx        ; crc = a xor b
   loop crc32_loop
-  mov ecx, 0FFFFFFFFh
-  xor edi, ecx        ; crc = crc xor 0xFFFFFFFF
+  xor edi, 0FFFFFFFFh ; crc = crc xor 0xFFFFFFFF
   mov eax, edi
 
   ret 8
