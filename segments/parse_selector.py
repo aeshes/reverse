@@ -1,11 +1,11 @@
 def parse_selector(selector):
-	rpl = selector & 0b11        # requested priveleges level
+	rpl = selector & 0b11        # requested privileges level
 	ti  = (selector >> 2) & 1    # table indicator
 	index = selector >> 3        # descriptor index
 
-	print(hex(selector) + ': ' + priveleges(rpl) + ', ' + table(ti))
+	print(hex(selector) + ': ' + privileges(rpl) + ', ' + table(ti))
 
-def priveleges(flags):
+def privileges(flags):
 	privs = {
 		0: 'ring 0',
 		1: 'ring 1',
