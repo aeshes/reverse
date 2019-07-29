@@ -22,7 +22,7 @@ def table(flags):
 	return tables[flags]
 
 if __name__ == "__main__":
-	code_kernel = 0b000000001000
+	code_kernel = 0b0000000000001000
 	data_kernel = 0b0000000000010000
 	code_user   = 0b0000000000011011
 	data_user   = 0b0000000000100111
