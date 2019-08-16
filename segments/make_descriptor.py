@@ -16,4 +16,8 @@ def type(code = 0, e = 0, w = 0, accessed = 0):
 
 if __name__ == "__main__":
 	video = make_descriptor(0xB800, 0xFFFF, type())
+	code  = make_descriptor(0xFF0000, 0x1000, type(code=1, e=1))
+	data  = make_descriptor(0xFF1000, 0x1000, type())
+	print(hex(code) + ": " + bin(code))
+	print(hex(data) + ": " + bin(data))
 	print(hex(video) + ": " + bin(video))

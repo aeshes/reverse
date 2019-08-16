@@ -40,7 +40,68 @@ print:
   mov cx, 2  ; second sector
   int 13h
 
-  hlt
+  push TARGET_SEGMENT
+  push TARGET_OFFSET - BOOT_OFFSET
+  retf
+
+TARGET_OFFSET:
+  ;
+  ; open A20 gate
+  ;
+  in al, 0x92
+  or al, 2
+  out 0x92, al
+
+  cli
+  mov al, 0x8F
+  out 0x70, al
+  in al, 0x71
+
+  ; magic break
+  xchg bx, bx
+
+  ;
+  ; calculate physical address
+  ;
+  mov eax, TARGET_SEGMENT
+  shl eax, 4
+  add eax, GDT - BOOT_OFFSET
+
+  mov [(GDTR-BOOT_OFFSET) + 2], eax
+  lgdt fword [GDTR - BOOT_OFFSET]
+
+  ;
+  ; turn on protected mode
+  ;
+  mov eax, cr0
+  or al, 1
+  mov cr0, eax
+
+  ; magic break
+  xchg bx, bx
+
+  ; enter protected mode
+  jmp fword 8:PM_ENTRY-BOOT_OFFSET
+
+GDT:
+  dq 0                  ; NULL descriptor
+  dq 0xff0c9000001000   ; code descriptor
+  dq 0xff009010001000   ; data descriptor
+  dq 0x90b800ffff       ; video descriptor
+
+GDTR:
+  dw (GDTR - BOOT_OFFSET - GDT - 1)
+  dd ?
 
 msg db 'Fuck!', 0
 db 510-($-start) dup(0x90), 0x55, 0xAA
+
+use32
+PM_ENTRY:
+  ;
+  ; set segment registers
+  ;
+  mov ax, 0x10 ; data selector
+  mov ds, ax   ; set data segment
+  mov ax, 0x18 ; video selector
+  mov gs, ax   ; set video segment
