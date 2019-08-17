@@ -91,7 +91,7 @@ GDT:
   db 0xFF
   db 0         ; base address
   db 0
-  db 0xFF
+  db 0x01
   db 10011010b ; 1001, C/D - 1, R/W - 1, 0
   db 0         ; G - 0, 000, limit - 0000
   db 0         ; base address
@@ -100,8 +100,8 @@ GDT:
   db 0xFF      ; segment limit
   db 0xFF
   db 0         ; base address
-  db 0x10
-  db 0xFF
+  db 0
+  db 0x02
   db 10010010b ; 1001, C/D - 0, 0, R/W - 1, 0
   db 0         ; G - 0, 000, limit - 0000
   db 0         ; base address
@@ -110,8 +110,8 @@ GDT:
   db 0xFF      ; segment limit
   db 0xFF
   db 0         ; base address
-  db 0x20
-  db 0xFF
+  db 0
+  db 0x03
   db 10010010b ; 1001, C/D - 0, 0, R/W - 1, 0
   db 01000000b ; G - 0, D - 1, limit - 0
   db 0         ; base address
