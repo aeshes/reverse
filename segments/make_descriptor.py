@@ -1,5 +1,5 @@
 def make_descriptor(base, limit, type, granularity = 0):
-	descr = 0x0000009000000000
+	descr = 0x0000900000000000
 
 	descr = descr | ((base & 0xFFFF) << 16)	    # base[0..15] 16-31 bits
 	descr = descr | ((base & 0x00FF0000) << 32) # base[16..23] 32-39 bits

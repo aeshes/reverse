@@ -85,9 +85,9 @@ TARGET_OFFSET:
 
 GDT:
   dq 0                  ; NULL descriptor
-  dq 0xff0c9000001000   ; code descriptor
-  dq 0xff009010001000   ; data descriptor
-  dq 0x90b800ffff       ; video descriptor
+  dq 0xff9c0000001000   ; code descriptor
+  dq 0xff900010001000   ; data descriptor
+  dq 0x9000b800ffff     ; video descriptor
 
 GDTR:
   dw (GDTR - BOOT_OFFSET - GDT - 1)
