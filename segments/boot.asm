@@ -85,9 +85,36 @@ TARGET_OFFSET:
 
 GDT:
   dq 0                  ; NULL descriptor
-  dq 0xff9c0000001000   ; code descriptor
-  dq 0xff900010001000   ; data descriptor
-  dq 0x9000b800ffff     ; video descriptor
+
+  ; code segment
+  db 0xFF      ; segment limit
+  db 0xFF
+  db 0         ; base address
+  db 0
+  db 0xFF
+  db 10010010b ; 1001, C/D - 1, R/W - 1, 0
+  db 0         ; G - 0, 000, limit - 0000
+  db 0         ; base address
+
+  ; data segment
+  db 0xFF      ; segment limit
+  db 0xFF
+  db 0         ; base address
+  db 0x10
+  db 0xFF
+  db 10010010b ; 1001, C/D - 0, 0, R/W - 1, 0
+  db 0         ; G - 0, 000, limit - 0000
+  db 0         ; base address
+
+  ; video segment
+  db 0xFF      ; segment limit
+  db 0xFF
+  db 0         ; base address
+  db 0x80
+  db 0x0B
+  db 10010010b ; 1001, C/D - 0, 0, R/W - 1, 0
+  db 0         ; G - 0, 000, limit - 0000
+  db 0         ; base address
 
 GDTR:
   dw (GDTR - BOOT_OFFSET - GDT - 1)
